@@ -1,0 +1,8 @@
+# Core dependencies for YOLOv11 training with Optuna
+ultralytics>=8.0.0
+optuna>=3.0.0
+pyyaml>=6.0
+matplotlib>=3.5.0
+torch>=2.0.0
+torchvision>=0.15.0
+
