@@ -19,7 +19,7 @@ from ultralytics import YOLO
 # CONFIGURACIÓN GENERAL
 # ======================================================
 DATASET = "data.yaml"               # Ruta al YAML del dataset
-BASE_MODEL = "yolo11s-seg.pt"       # Modelo base (o best.pt)
+BASE_MODEL = "yolo11s.pt"           # Modelo base: "yolo11s.pt" (bbox) o "yolo11s-seg.pt" (seg)
 PROJECT = "runs/optuna_search"      # Carpeta de resultados
 DEVICE = "0"                        # GPU o "cpu"
 EPOCHS = 100                        # Épocas por prueba

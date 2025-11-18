@@ -1,12 +1,12 @@
 # 🚀 Entrenamiento de YOLOv11 con Optimización Automática de Hiperparámetros
 
-Este proyecto implementa un sistema de entrenamiento automatizado para modelos YOLOv11 de segmentación de instancias, utilizando **Optuna** para la optimización automática de hiperparámetros. El objetivo es entrenar un modelo de detección y segmentación de grietas en concreto.
+Este proyecto implementa un sistema de entrenamiento automatizado para modelos YOLOv11 (detección con bounding boxes o segmentación de instancias), utilizando **Optuna** para la optimización automática de hiperparámetros. El objetivo es entrenar un modelo de detección y/o segmentación de grietas en concreto.
 
 ## 📋 Descripción
 
 Este proyecto está diseñado para:
 
-- **Entrenar modelos YOLOv11-seg** (segmentación de instancias) para detectar grietas en imágenes de concreto
+- **Entrenar modelos YOLOv11** (detección con bounding boxes) o **YOLOv11-seg** (segmentación de instancias) para detectar grietas en imágenes de concreto
 - **Optimizar automáticamente hiperparámetros** usando Optuna (Tree-structured Parzen Estimator)
 - **Evaluar múltiples configuraciones** de forma sistemática y encontrar la mejor combinación de parámetros
 - **Generar visualizaciones** de la evolución de las métricas durante la optimización
@@ -82,13 +82,17 @@ Puedes modificar estos parámetros según tus necesidades:
 
 ```python
 DATASET = "data.yaml"               # Ruta al YAML del dataset
-BASE_MODEL = "yolo11s-seg.pt"       # Modelo base pre-entrenado
+BASE_MODEL = "yolo11s.pt"           # Modelo base: "yolo11s.pt" (bbox) o "yolo11s-seg.pt" (seg)
 PROJECT = "runs/optuna_search"      # Carpeta de resultados
 DEVICE = "0"                        # GPU ("0", "1", etc.) o "cpu"
 EPOCHS = 100                        # Épocas por prueba
 WORKERS = 8                         # Hilos del dataloader
 N_TRIALS = 20                       # Número de combinaciones a probar
 ```
+
+**Nota sobre tipos de modelo:**
+- **Bounding Boxes (Detección)**: Usa modelos sin `-seg` (ej: `yolo11s.pt`) - Detecta objetos con rectángulos
+- **Segmentación**: Usa modelos con `-seg` (ej: `yolo11s-seg.pt`) - Detecta objetos con máscaras de píxeles
 
 ### Hiperparámetros que se optimizan automáticamente:
 
@@ -174,39 +178,23 @@ Al finalizar, se genera un gráfico que muestra:
 - Evolución del Recall por trial
 - Identificación visual de las mejores configuraciones
 
-## 📊 Interpretación de Resultados
-
-### Archivo `optuna_best.yaml`
-
-Contiene:
-```yaml
-best_mAP: 0.7234          # Mejor mAP50-95 encontrado
-best_params:              # Mejores hiperparámetros
-  imgsz: 640
-  batch: 16
-  lr0: 0.00123
-  optimizer: AdamW
-  momentum: 0.937
-  weight_decay: 0.0001
-best_trial: 15            # Número del trial que obtuvo el mejor resultado
-```
-
-### Mejor Modelo
-
-El mejor modelo se encuentra en:
-```
-runs/optuna_search/trial_X_*/weights/best.pt
-```
-
-Puedes usar este modelo para inferencia o continuar entrenándolo.
 
 ## ⚙️ Personalización
 
 ### Cambiar el Modelo Base
 
-Puedes usar diferentes modelos pre-entrenados:
+Puedes usar diferentes modelos pre-entrenados según tu necesidad:
+
+**Modelos de Bounding Boxes (Detección):**
+- `yolo11n.pt` (nano - más rápido, menos preciso)
+- `yolo11s.pt` (small - balanceado) ⭐ **Recomendado para detección**
+- `yolo11m.pt` (medium - más preciso, más lento)
+- `yolo11l.pt` (large - muy preciso, muy lento)
+- `yolo11x.pt` (xlarge - máximo rendimiento)
+
+**Modelos de Segmentación:**
 - `yolo11n-seg.pt` (nano - más rápido, menos preciso)
-- `yolo11s-seg.pt` (small - balanceado) ⭐ **Recomendado**
+- `yolo11s-seg.pt` (small - balanceado) ⭐ **Recomendado para segmentación**
 - `yolo11m-seg.pt` (medium - más preciso, más lento)
 - `yolo11l-seg.pt` (large - muy preciso, muy lento)
 - `yolo11x-seg.pt` (xlarge - máximo rendimiento)
