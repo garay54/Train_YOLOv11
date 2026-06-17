@@ -1,3 +1,19 @@
+# Train YOLOv11
+
+## Portfolio summary / Resumen de portafolio
+
+Train_YOLOv11 automates YOLOv11 instance segmentation training and uses Optuna to search for better hyperparameters. It is designed for crack detection/segmentation experiments where repeatability and measurable training configuration matter.
+
+Train_YOLOv11 automatiza el entrenamiento de segmentacion de instancias con YOLOv11 y utiliza Optuna para buscar mejores hiperparametros. Esta orientado a experimentos de deteccion/segmentacion de grietas donde importan la repetibilidad y la configuracion medible del entrenamiento.
+
+**Technologies / Tecnologias:** Python, YOLOv11, Optuna, computer vision, segmentation.
+
+**Project status / Estado:** Research/experimentation toolkit for model training.
+
+**Next steps / Proximos pasos:** add an example run configuration, document expected dataset structure, and publish reproducible metrics.
+
+---
+
 # 🚀 Entrenamiento de YOLOv11 con Optimización Automática de Hiperparámetros
 
 Este proyecto implementa un sistema de entrenamiento automatizado para modelos YOLOv11 (detección con bounding boxes o segmentación de instancias), utilizando **Optuna** para la optimización automática de hiperparámetros. El objetivo es entrenar un modelo de detección y/o segmentación de grietas en concreto.
